@@ -1,0 +1,3005 @@
+{
+	"info": {
+		"_postman_id": "f1500ff9-9fb6-405d-a1fb-dbed22c1ce20",
+		"name": "0001 Trello Dynamic Boards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "0001 Create A Unique Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"",
+							"var boardId = jsonData.id;",
+							"var boardName = jsonData.name;",
+							"",
+							"pm.environment.set(\"boardId\", boardId);",
+							"pm.environment.set(\"boardName\", boardName);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							"var  months = [\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\"];\r",
+							"var today = new Date();\r",
+							"var date = today.getFullYear()+'_'+(today.getMonth()+1)+'_'+today.getDate();\r",
+							"var time = today.getHours() + \"_\" + today.getMinutes() + \"_\" + today.getSeconds();\r",
+							"var dateTime = '_' + date+'_'+time;\r",
+							"var monthName=months[today.getMonth()];\r",
+							"\r",
+							"pm.environment.set(\"dateTime\", dateTime);\r",
+							"pm.environment.set(\"monthName\", monthName);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/?name={{monthName}}{{dateTime}}&defaultLists=false",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{monthName}}{{dateTime}}"
+						},
+						{
+							"key": "defaultLists",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0002  Verify Board Creation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var toDolistId = jsonData.id;",
+							"",
+							"pm.environment.set(\"toDolistId\", toDolistId);",
+							"",
+							"pm.test(\"Verify Board Creation: \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"boardName\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0003 Create a To Do List on The Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"var listName = \"TO DO\";",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var toDolistId = jsonData.id;",
+							"console.log(toDolistId);",
+							"",
+							"pm.environment.set(\"toDolistId\", toDolistId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists?name=TO DO&idBoard={{boardId}}&pos=1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "TO DO"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						},
+						{
+							"key": "pos",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0004 Create a Card Develop UX",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a9892e4c-ba03-4f52-806c-d1a311e62ed3",
+						"exec": [
+							"_ = require('lodash');",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var cardName = \"Develop UX\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var cardUXId = jsonData.id;",
+							"",
+							"pm.environment.set(\"cardUXId\", cardUXId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(cardName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c5e85af2-db2a-490c-9a1a-038e3493f04c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards?idList={{toDolistId}}&name=Develop UX",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "{{toDolistId}}"
+						},
+						{
+							"key": "name",
+							"value": "Develop UX"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0005 Create a Card Develop API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ecdbb792-81f0-41cc-b3f5-596676559346",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var cardName = \"Develop APIs\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var cardAPIId = jsonData.id;",
+							"",
+							"pm.environment.set(\"carAPIId\", cardAPIId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(cardName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3800e219-c9e1-4115-8c30-eca54e4327f8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards?idList={{toDolistId}}&name=Develop APIs",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "{{toDolistId}}"
+						},
+						{
+							"key": "name",
+							"value": "Develop APIs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0006 Create a Card Test API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5afaad0a-79ec-4fa3-ab6d-93d6d8d2a448",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var cardName = \"Test APIs\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var cardTestAPIId = jsonData.id;",
+							"",
+							"pm.environment.set(\"cardTestAPIId\", cardTestAPIId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(cardName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7cd54344-6714-4a99-ba73-07532338f593",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards?idList={{toDolistId}}&name=Test APIs",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "{{toDolistId}}"
+						},
+						{
+							"key": "name",
+							"value": "Test APIs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0007 Create a Card Integrate API and UX",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aa8c5cf5-34e3-4471-821b-8faddbfec37a",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var cardName = \"Integrate API and UX\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var cardIntegrateAPIUXId = jsonData.id;",
+							"",
+							"pm.environment.set(\"cardIntegrateAPIUXId\", cardIntegrateAPIUXId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(cardName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7f46829d-56de-4d62-93a3-4524b0540e14",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards?idList={{toDolistId}}&name=Integrate API and UX",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "{{toDolistId}}"
+						},
+						{
+							"key": "name",
+							"value": "Integrate API and UX"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0008 Create a Card Test UX",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "854445e1-d61f-4d45-99d2-8abbf451e36b",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var cardName = \"Test UX\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var carTestUXId = jsonData.id;",
+							"",
+							"pm.environment.set(\"carTestUXId\", carTestUXId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    assert.equal(jsonData.name, cardName, ' Card Names not Equal');    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a47d21a7-94a9-442c-8725-fd8017ab16e4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/cards?idList={{toDolistId}}&name=Test UX",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "idList",
+							"value": "{{toDolistId}}"
+						},
+						{
+							"key": "name",
+							"value": "Test UX"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0009 Verify To Do List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4680cb4c-1b92-4c82-8fb0-e1ad097efa53",
+						"exec": [
+							"var today = new Date();\r",
+							"var date = today.getFullYear()+'_'+(today.getMonth()+1)+'_'+today.getDate();\r",
+							"var time = today.getHours() + \"_\" + today.getMinutes() + \"_\" + today.getSeconds();\r",
+							"var dateTime = '_' + date+'_'+time;\r",
+							"\r",
+							"pm.environment.set(\"dateTime\", dateTime);\r",
+							"console.log(dateTime);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "117fc1c0-6a31-41a4-8d40-fcd90b169a84",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var listName  = \"TO DO\";",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var toDoPosition = jsonData.pos;",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{toDolistId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{toDolistId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0010 Get Board Date Last Activity",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d8a5538f-a081-40de-8841-c13030b15554",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "350202cd-bb0d-4f93-87ea-eb6b9af48d95",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var toDoPosition = jsonData.pos;",
+							"",
+							"pm.test(\"Verify value is NOT Null: \" +  jsonData._value + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    assert.isNotNull(jsonData._value, '_Value is Null');    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardId}}/dateLastActivity",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardId}}",
+						"dateLastActivity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0011 Get Membership of Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66931fda-0fca-41f1-8d6c-f747141b2521",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var memberType = jsonData[0].memberType;",
+							"var memberType = \"admin\";",
+							"",
+							"pm.test(\"Verify member type: \" +  memberType + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].memberType).to.eql(memberType);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4567ab7-8418-4006-8442-0e7d351fceb7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardId}}/memberships",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardId}}",
+						"memberships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0012 Create a Doing List on The Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var listName = \"DOING\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"",
+							"var doingId = jsonData.id;",
+							"",
+							"pm.environment.set(\"doingId\", doingId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    assert.exists(jsonData, \"Response body is neither null or 'undefined'\");",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists?name=DOING&idBoard={{boardId}}&pos=2",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "DOING"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						},
+						{
+							"key": "pos",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0013 Verify Doing List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4680cb4c-1b92-4c82-8fb0-e1ad097efa53",
+						"exec": [
+							"var today = new Date();\r",
+							"var date = today.getFullYear()+'_'+(today.getMonth()+1)+'_'+today.getDate();\r",
+							"var time = today.getHours() + \"_\" + today.getMinutes() + \"_\" + today.getSeconds();\r",
+							"var dateTime = '_' + date+'_'+time;\r",
+							"\r",
+							"pm.environment.set(\"dateTime\", dateTime);\r",
+							"console.log(dateTime);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "117fc1c0-6a31-41a4-8d40-fcd90b169a84",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var listName = \"DOING\";",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var doingPosisiton = jsonData.pos;",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{doingId}}/?id=field=idBoard",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{doingId}}",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "field=idBoard"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0014 Create a Code Review  List on The Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var listName = \"CODE REVIEW\";",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"",
+							"var codeReviewId = jsonData.id;",
+							"",
+							"pm.environment.set(\"codeReviewId\", codeReviewId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists?name=CODE REVIEW&idBoard={{boardId}}&pos=3",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "CODE REVIEW"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						},
+						{
+							"key": "pos",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0015 Verify Code Review List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd50fde7-8657-4a43-9f02-50d1f22cd424",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cf564ca9-95ec-423e-a616-bf1ab157f78a",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var listName = \"CODE REVIEW\";",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var doingPosisiton = jsonData.pos;",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{codeReviewId}}/?id=field=idBoard",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{codeReviewId}}",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "field=idBoard"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0016 Create a Merge  List on The Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"",
+							"var mergeId = jsonData.id;",
+							"",
+							"pm.environment.set(\"mergeId\", mergeId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"MERGE\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							"var newPosition = pm.environment.get(\"position\") + 1;",
+							"pm.environment.set(\"newPosition\", newPosition);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists?name=MERGE&idBoard={{boardId}}&pos=4",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "MERGE"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						},
+						{
+							"key": "pos",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0017 Verify Merge List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4680cb4c-1b92-4c82-8fb0-e1ad097efa53",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "117fc1c0-6a31-41a4-8d40-fcd90b169a84",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var listName = \"MERGE\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var doingPosisiton = jsonData.pos;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{mergeId}}/?id=field=idBoard",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{mergeId}}",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "field=idBoard"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0018 Create a Ready for QA  List on The Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var readyForQA = jsonData.id;",
+							"var listName = \"READY FOR QA\";",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"readyForQA\", readyForQA);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							"var newPosition = pm.environment.get(\"position\") + 1;",
+							"pm.environment.set(\"newPosition\", newPosition);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists?name=READY FOR QA&idBoard={{boardId}}&pos=5",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "READY FOR QA"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						},
+						{
+							"key": "pos",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0019  Verify Ready for QA  List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4680cb4c-1b92-4c82-8fb0-e1ad097efa53",
+						"exec": [
+							"var today = new Date();\r",
+							"var date = today.getFullYear()+'_'+(today.getMonth()+1)+'_'+today.getDate();\r",
+							"var time = today.getHours() + \"_\" + today.getMinutes() + \"_\" + today.getSeconds();\r",
+							"var dateTime = '_' + date+'_'+time;\r",
+							"\r",
+							"pm.environment.set(\"dateTime\", dateTime);\r",
+							"console.log(dateTime);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "117fc1c0-6a31-41a4-8d40-fcd90b169a84",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var listName = \"READY FOR QA\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var doingPosisiton = jsonData.pos;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{readyForQA}}/?id=field=idBoard",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{readyForQA}}",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "field=idBoard"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0020 Create a in QA  List on The Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var inQAId = jsonData.id;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"inQAId\", inQAId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"IN QA\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							"var newPosition = pm.environment.get(\"position\") + 1;",
+							"pm.environment.set(\"newPosition\", newPosition);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists?name=IN QA&idBoard={{boardId}}&pos=6",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "IN QA"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						},
+						{
+							"key": "pos",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0021 Verify In QA  List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4680cb4c-1b92-4c82-8fb0-e1ad097efa53",
+						"exec": [
+							"var today = new Date();\r",
+							"var date = today.getFullYear()+'_'+(today.getMonth()+1)+'_'+today.getDate();\r",
+							"var time = today.getHours() + \"_\" + today.getMinutes() + \"_\" + today.getSeconds();\r",
+							"var dateTime = '_' + date+'_'+time;\r",
+							"\r",
+							"pm.environment.set(\"dateTime\", dateTime);\r",
+							"console.log(dateTime);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "117fc1c0-6a31-41a4-8d40-fcd90b169a84",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var listName = \"IN QA\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var doingPosisiton = jsonData.pos;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{inQAId}}/?id=field=idBoard",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{inQAId}}",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "field=idBoard"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0022 Create a Ready for Prod List on The Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var readyForQAId = jsonData.id;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"readyForQAId\", readyForQAId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"Ready for PROD\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							"var newPosition = pm.environment.get(\"position\") + 1;",
+							"pm.environment.set(\"newPosition\", newPosition);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists?name=Ready for PROD&idBoard={{boardId}}&pos=7",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Ready for PROD"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						},
+						{
+							"key": "pos",
+							"value": "7"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0023 Verify Ready for Prod List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4680cb4c-1b92-4c82-8fb0-e1ad097efa53",
+						"exec": [
+							"var today = new Date();\r",
+							"var date = today.getFullYear()+'_'+(today.getMonth()+1)+'_'+today.getDate();\r",
+							"var time = today.getHours() + \"_\" + today.getMinutes() + \"_\" + today.getSeconds();\r",
+							"var dateTime = '_' + date+'_'+time;\r",
+							"\r",
+							"pm.environment.set(\"dateTime\", dateTime);\r",
+							"console.log(dateTime);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "117fc1c0-6a31-41a4-8d40-fcd90b169a84",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var listName = \"Ready for PROD\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var doingPosisiton = jsonData.pos;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{readyForQAId}}/?id=field=idBoard",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{readyForQAId}}",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "field=idBoard"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0024 Create a Done List on The Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c9bb6bd-7d71-45b9-8d8f-0530e89dfcab",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var listName = \"DONE\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonDataString = JSON.stringify(jsonData);",
+							"var doneId = jsonData.id;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"doneId\", doneId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "57abda18-4ec5-4ab4-b2b1-5abcd6da6ed7",
+						"exec": [
+							"var newPosition = pm.environment.get(\"position\") + 1;",
+							"pm.environment.set(\"newPosition\", newPosition);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists?name=DONE&idBoard={{boardId}}&pos=8",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "DONE"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{boardId}}"
+						},
+						{
+							"key": "pos",
+							"value": "8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0025 Verify Done List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5b88be75-4d5f-42bd-88bc-2b285e7f732f",
+						"exec": [
+							"var today = new Date();\r",
+							"var date = today.getFullYear()+'_'+(today.getMonth()+1)+'_'+today.getDate();\r",
+							"var time = today.getHours() + \"_\" + today.getMinutes() + \"_\" + today.getSeconds();\r",
+							"var dateTime = '_' + date+'_'+time;\r",
+							"\r",
+							"pm.environment.set(\"dateTime\", dateTime);\r",
+							"console.log(dateTime);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0040fe4d-2a1d-434a-b96d-82c8fadce27d",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"var listName = \"DONE\";",
+							"var jsonData = JSON.parse(responseBody);",
+							"var doingPosisiton = jsonData.pos;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{doneId}}/?id=field=idBoard",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{doneId}}",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "field=idBoard"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "0026 Verify To Do Again",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f0ec0152-9d15-47d5-b9b9-a0d8e2889933",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "283737d2-d796-46a4-8ef0-e61ac3c50b1f",
+						"exec": [
+							"_ = require('lodash');",
+							"var chai = require('chai');",
+							"var assert = require('chai').assert;",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var listName  = \"TO DO\";",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"var toDoPosition = jsonData.pos;",
+							"var toDoId = jsonData.id;",
+							"",
+							"",
+							"pm.environment.set(\"toDoPosition\", toDoPosition);",
+							"pm.environment.set(\"toDoId\", toDoId);",
+							"",
+							"pm.test(\"Verify \" +  jsonData.name + \": \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(listName);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{toDolistId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{toDolistId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "00027 Update  TO DO Position",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f525b9e-8e17-4e7e-b8cc-1d1591b7242f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2063add9-1e71-4011-a8ec-2f06cdf5c27c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "tokenSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "139dfa49b73d81287c50ce0660b4119db55034b4e9b2ff93ac57f79dada8465c",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "53ece3f0e0b349fd47da3eddecc2379b794360e5f5e0e2b709a219a692d6dc4d",
+							"type": "string"
+						},
+						{
+							"key": "consumerKey",
+							"value": "a4cb61246f4bcb00a50b53cdacb63d7f",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/lists/{{toDoId}}?pos=1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lists",
+						"{{toDoId}}"
+					],
+					"query": [
+						{
+							"key": "pos",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

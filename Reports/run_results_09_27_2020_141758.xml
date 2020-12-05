@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="0001 Trello Dynamic Boards" tests="27" time="3.995">
+  <testsuite name="0001 Create A Unique Board" id="607e4385-9717-4aa1-a967-2a62781f4d49" timestamp="2020-09-27T19:18:00.839Z" tests="1" failures="0" errors="0" time="0.355">
+    <testcase name="Status code is 200" time="0.355" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0002  Verify Board Creation" id="25747fbc-15c9-4a3c-bdad-19e1a9faabbd" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.075">
+    <testcase name="Status code is 200" time="0.075" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify Board Creation: September_2020_9_27_14_18_0: " time="0.075" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0003 Create a To Do List on The Board" id="ce4416a2-c71d-48a7-aa8b-3e7e583eef64" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.192">
+    <testcase name="Status code is 200" time="0.192" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify TO DO: " time="0.192" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0004 Create a Card Develop UX" id="68f5d2f5-7f2a-4eb8-9dc5-3aae2d42985f" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.242">
+    <testcase name="Status code is 200" time="0.242" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify Develop UX: " time="0.242" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0005 Create a Card Develop API" id="ab618578-a2f4-45fd-9d05-d82f1dd39a30" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.231">
+    <testcase name="Status code is 200" time="0.231" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify Develop APIs: " time="0.231" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0006 Create a Card Test API" id="a708d2d5-6127-4b9d-a0d8-b653cc5e5011" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.256">
+    <testcase name="Status code is 200" time="0.256" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify Test APIs: " time="0.256" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0007 Create a Card Integrate API and UX" id="9d8d3faf-8b89-43f4-b40d-3857297c279a" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.242">
+    <testcase name="Status code is 200" time="0.242" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify Integrate API and UX: " time="0.242" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0008 Create a Card Test UX" id="a827492d-6b60-4d31-bf2e-e5920c254add" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.244">
+    <testcase name="Status code is 200" time="0.244" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify Test UX: " time="0.244" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0009 Verify To Do List" id="a6872506-401f-4e22-bf01-b193ffcdddde" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.066">
+    <testcase name="Status code is 200" time="0.066" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify TO DO: " time="0.066" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0010 Get Board Date Last Activity" id="d7a0bd1a-bee9-4426-9613-5e50393e730c" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.064">
+    <testcase name="Status code is 200" time="0.064" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify value is NOT Null: 2020-09-27T19:18:03.249Z: " time="0.064" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0011 Get Membership of Board" id="1b82564f-a8df-4124-bd2c-9fc47f1f895a" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.071">
+    <testcase name="Status code is 200" time="0.071" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify member type: admin: " time="0.071" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0012 Create a Doing List on The Board" id="3b9f17de-ad22-4b4c-9dd6-73eb7bbd58a7" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.197">
+    <testcase name="Status code is 200" time="0.197" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify DOING: " time="0.197" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0013 Verify Doing List" id="d758c002-6d93-4dd8-b1c6-52062a4e0081" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.070">
+    <testcase name="Status code is 200" time="0.070" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify DOING: " time="0.070" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0014 Create a Code Review  List on The Board" id="5cf78112-b061-404d-9832-bcc611b7229a" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.216">
+    <testcase name="Status code is 200" time="0.216" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify CODE REVIEW: " time="0.216" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0015 Verify Code Review List" id="3de8a1e4-a103-4f46-ab3b-10941e377670" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.068">
+    <testcase name="Status code is 200" time="0.068" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify CODE REVIEW: " time="0.068" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0016 Create a Merge  List on The Board" id="b62e8ae9-85fc-4a23-9865-67482035e714" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.197">
+    <testcase name="Status code is 200" time="0.197" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify MERGE: " time="0.197" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0017 Verify Merge List" id="982924db-9f44-41e8-973e-d03ccce5ff9d" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.066">
+    <testcase name="Status code is 200" time="0.066" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify MERGE: " time="0.066" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0018 Create a Ready for QA  List on The Board" id="16994f35-ef8b-4ba6-900d-14062bfa8ce0" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.200">
+    <testcase name="Status code is 200" time="0.200" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify READY FOR QA: " time="0.200" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0019  Verify Ready for QA  List" id="711efd16-0c6d-4d6e-ba2d-f8c655ecf6c7" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.067">
+    <testcase name="Status code is 200" time="0.067" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify READY FOR QA: " time="0.067" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0020 Create a in QA  List on The Board" id="4653f07d-b600-44fa-b9ae-2c3d1c773698" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.177">
+    <testcase name="Status code is 200" time="0.177" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify IN QA: " time="0.177" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0021 Verify In QA  List" id="0120fc50-782c-4a26-b840-52099c058c92" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.066">
+    <testcase name="Status code is 200" time="0.066" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify IN QA: " time="0.066" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0022 Create a Ready for Prod List on The Board" id="8e7838b4-f978-42d6-aa34-2eb2fe958a7f" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.186">
+    <testcase name="Status code is 200" time="0.186" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify Ready for PROD: " time="0.186" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0023 Verify Ready for Prod List" id="59285051-3d19-495e-a55f-589864770dfd" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.062">
+    <testcase name="Status code is 200" time="0.062" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify Ready for PROD: " time="0.062" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0024 Create a Done List on The Board" id="fcfc003b-bb57-4f46-842d-4cb97e7810a2" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.179">
+    <testcase name="Status code is 200" time="0.179" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify DONE: " time="0.179" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0025 Verify Done List" id="0637ae11-6b6b-4948-aa14-d6125c369623" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.064">
+    <testcase name="Status code is 200" time="0.064" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify DONE: " time="0.064" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="0026 Verify To Do Again" id="330efe59-da9c-42cc-bea6-fdfcbdefa131" timestamp="2020-09-27T19:18:00.839Z" tests="2" failures="0" errors="0" time="0.064">
+    <testcase name="Status code is 200" time="0.064" classname="0001TrelloDynamicBoards"/>
+    <testcase name="Verify TO DO: " time="0.064" classname="0001TrelloDynamicBoards"/>
+  </testsuite>
+  <testsuite name="00027 Update  TO DO Position" id="29aa3ac1-22d8-42ad-ab2c-7087b6dfcb26" timestamp="2020-09-27T19:18:00.839Z" tests="0" failures="0" errors="0" time="0.078"/>
+</testsuites>
